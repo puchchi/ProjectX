@@ -1,0 +1,29 @@
+Create Poject
+pip install virtualenv
+pip install django==1.11.6
+pip install djangotoolbox			// Not working
+pip install django-mongodb-engine	// Not working
+pip install mongoengine
+pip install djangorestframework		// RDBMS rest framework
+pip install django-rest-framework-mongoengine
+
+Optional
+pip install pymongo
+
+
+mongoDB====================
+run mongo.exe
+use admin
+
+
+mysql=====================
+mysql -u username -p
+CREATE DATABASE ProjectXsqlDB;
+GRANT ALL PRIVILEGES ON *.* TO 'ProjectXUser'@'localhost' IDENTIFIED BY 'ProjectXPass';
+
+
+
+django==================
+manage.py createsuperuser
+ProjectXAdmin
+ProjectXPassword
