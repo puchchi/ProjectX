@@ -10,12 +10,14 @@ For the full list of settings and their values, see
 https://docs.djangoproject.com/en/1.9/ref/settings/
 """
 
-import os
+import os, sys
 import posixpath
+from os import path
 
 # Build paths inside the project like this: os.path.join(BASE_DIR, ...)
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
-
+sys.path.append( path.dirname( path.dirname( path.abspath(__file__) ) ) )
+sys.path.append( path.dirname( path.dirname( path.dirname( path.abspath(__file__) ) ) ) )
 
 # Quick-start development settings - unsuitable for production
 # See https://docs.djangoproject.com/en/1.9/howto/deployment/checklist/
@@ -40,6 +42,9 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+    "djangotoolbox",
+    "rest_framework",
+    "api",
 ]
 
 MIDDLEWARE_CLASSES = [
@@ -79,11 +84,18 @@ WSGI_APPLICATION = 'ProjectX.wsgi.application'
 
 DATABASES = {
     'default': {
-        'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': os.path.join(BASE_DIR, 'db.sqlite3'),
+      'ENGINE': 'django.db.backends.mysql',
+      'NAME': 'ProjectXsqlDB',
+      'USER': 'ProjectXUser',
+      'PASSWORD': 'ProjectXPass',
+      'HOST': 'localhost',
+      'PORT': '3306',
     }
 }
 
+# connecting to mongoDB
+import mongoengine as me
+me.connect('MongoDB')
 
 # Password validation
 # https://docs.djangoproject.com/en/1.9/ref/settings/#auth-password-validators
