@@ -19,13 +19,19 @@ class PlaceViewSet(viewsets.ModelViewSet):
 class PlaceView(APIView):
 
     def get(self, request):
+        """
+        API endpoint that allows user to get places.
+        """
         serializer = PlaceSerializer(Place.objects.all(), many=True)
+        print Place.objects.all()
         response = {"places": serializer.data}
         return Response(response, status=status.HTTP_200_OK)
 
     def post(self, request, format=None):
         data = request.data
+        print data
         serializer = PlaceSerializer(data=data)
+        print serializer.is_valid()
         if serializer.is_valid():
             poll = Place(**data)
             poll.save()

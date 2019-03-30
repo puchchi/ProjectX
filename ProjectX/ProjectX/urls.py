@@ -46,4 +46,5 @@ urlpatterns = [
     # url(r'^admin/', include(admin.site.urls)),
 
     url(r'^api/', include('api.urls')),
+    url(r'^admin/', include('dataAdmin.urls'))
 ]

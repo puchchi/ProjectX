@@ -1,0 +1,40 @@
+body
+{
+}
+
+.marginT10 {
+    margin-top: 10px;
+}
+
+.marginT20 {
+    margin-top: 20px;
+}
+
+.marginB10 {
+    margin-bottom: 10px;
+}
+
+.marginB20 {
+    margin-bottom: 20px;
+}
+
+.body-content {
+    padding-left: 15px;
+    padding-right: 15px;
+}
+
+.paddingT20{
+    padding-top:20px;
+}
+
+.justify-contentL {
+    justify-content: left!important;
+}
+
+.justify-contentR {
+    justify-content: right !important;
+}
+
+.justify-contentC {
+    justify-content: center !important;
+}

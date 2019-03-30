@@ -1,0 +1,47 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{{ title }} - Data Administration</title>
+    {% load staticfiles %}
+    <link rel="stylesheet" type="text/css" href="{% static 'data_admin/css/data_admin.css' %}" />
+    <link rel="stylesheet" type="text/css" href="{% static 'data_admin/css/bootstrap.min.css' %}" />
+    <script src="{% static 'data_admin/js/jquery.min.js' %}"></script>
+    <script src="{% static 'data_admin/js/popper.min.js' %}"></script>
+    <script src="{% static 'data_admin/js/bootstrap.min.js' %}"></script>
+</head>
+<body>
+    <nav class="navbar navbar-expand-sm bg-dark navbar-dark navbar-fixed-top">
+        <div class="container">
+            <ul class="navbar-nav">
+                <li class="nav-item">
+                    <a class="nav-link navbar-brand" href="{% url 'dataAdminIndex' %}">ProjectX</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="{% url 'dataAdminAddPlace' %}">Add place</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="{% url 'about' %}">Approve place</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="{% url 'about' %}">Update place</a>
+                </li>
+            </ul>
+            {% include 'data_admin/loginpartial.html' %}
+        </div>
+    </nav>
+
+
+    <div class="container body-content">
+{% block content %}{% endblock %}
+        <hr/>
+        <footer>
+            <p>&copy; {{ year }} - ProjectX</p>
+        </footer>
+    </div>
+
+{% block scripts %}{% endblock %}
+{% block stylesheet %}{% endblock %}
+</body>
+</html>

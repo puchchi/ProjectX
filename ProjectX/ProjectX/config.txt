@@ -21,9 +21,16 @@ mysql -u username -p
 CREATE DATABASE ProjectXsqlDB;
 GRANT ALL PRIVILEGES ON *.* TO 'ProjectXUser'@'localhost' IDENTIFIED BY 'ProjectXPass';
 
+show dbs; show collections
 
 
 django==================
 manage.py createsuperuser
 ProjectXAdmin
 ProjectXPassword
+
+
+How to run setup=============
+1: Run MySQL server
+2: Run MongoDB server C:\Program Files\MongoDB\Server\4.0\bin\mongod.exe
+3: Run django
