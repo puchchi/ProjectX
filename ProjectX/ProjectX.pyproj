@@ -54,6 +54,7 @@
     <Compile Include="dataAdmin\migrations\__init__.py" />
     <Compile Include="dataAdmin\models.py" />
     <Compile Include="dataAdmin\tests.py" />
+    <Compile Include="dataAdmin\urls.py" />
     <Compile Include="dataAdmin\views.py" />
     <Compile Include="dataAdmin\__init__.py" />
     <Compile Include="manage.py" />
@@ -95,6 +96,7 @@
     <Content Include="dataAdmin\static\data_admin\js\bootstrap.min.js" />
     <Content Include="dataAdmin\static\data_admin\js\jquery.min.js" />
     <Content Include="dataAdmin\static\data_admin\js\popper.min.js" />
+    <Content Include="dataAdmin\templates\data_admin\update_place.html" />
     <Content Include="dataAdmin\templates\data_admin\add_place.html" />
     <Content Include="dataAdmin\templates\data_admin\index.html" />
     <Content Include="dataAdmin\templates\data_admin\layout.html" />

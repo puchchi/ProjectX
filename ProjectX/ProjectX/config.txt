@@ -14,14 +14,14 @@ pip install pymongo
 mongoDB====================
 run mongo.exe
 use admin
+show dbs; show collections
+
 
 
 mysql=====================
 mysql -u username -p
 CREATE DATABASE ProjectXsqlDB;
 GRANT ALL PRIVILEGES ON *.* TO 'ProjectXUser'@'localhost' IDENTIFIED BY 'ProjectXPass';
-
-show dbs; show collections
 
 
 django==================

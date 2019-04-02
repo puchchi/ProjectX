@@ -38,3 +38,11 @@ body
 .justify-contentC {
     justify-content: center !important;
 }
+
+.hidden{
+    visibility:hidden;
+}
+
+.height1{
+    height:1px;
+}

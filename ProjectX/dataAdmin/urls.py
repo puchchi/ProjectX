@@ -11,4 +11,5 @@ urlpatterns = [
         url(r'^$',views.index, name='dataAdminIndex'),
         url(r'^index/$',views.index, name='dataAdminIndex'),
         url(r'^addplace/$',views.addPlace, name='dataAdminAddPlace'),
+        url(r'^updateplace/$',views.updatePlace, name='dataAdminUpdatePlace'),
     ]

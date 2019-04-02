@@ -17,8 +17,8 @@ def index(request):
         }
     )
 
-def addPlace(request):
-    assert isinstance(request, HttpRequest)
+def addPlace(request, msg="", isSuccessful=False):
+    #assert isinstance(request, HttpRequest)
     return render(
         request,
         'data_admin/add_place.html',
@@ -26,6 +26,18 @@ def addPlace(request):
             'title':'Add Place',
             'year':datetime.now().year,
             'key':GOOGLE_API_KEY,
-            'placeAPI':'http://localhost:8000/api/'
+            'placeAPI':'http://localhost:8000/api/',
+            'previousPostStatus': isSuccessful,
+            'previousMessage':msg
+        }
+    )
+
+def updatePlace(request):
+
+    return render(
+        request,
+        'data_admin/update_place.html',
+        {
+            'title':'Update Place',
         }
     )
