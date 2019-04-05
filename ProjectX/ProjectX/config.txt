@@ -33,4 +33,4 @@ ProjectXPassword
 How to run setup=============
 1: Run MySQL server
 2: Run MongoDB server C:\Program Files\MongoDB\Server\4.0\bin\mongod.exe
-3: Run django
+3: Run django C:\Users\anursin\Documents\GitHub\ProjectX\ProjectX\manage.py runserver

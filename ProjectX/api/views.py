@@ -9,7 +9,8 @@ from rest_framework.views import APIView
 from rest_framework.response import Response
 from django.http.request import QueryDict
 
-import json
+from django.shortcuts import get_list_or_404, get_object_or_404
+import json, urllib2
 
 # Create your views here.
 class PlaceViewSet(viewsets.ModelViewSet):
@@ -31,10 +32,15 @@ class PlaceView(APIView):
             data = rawData.dict()
             query = data['search_query']
             serializer = PlaceSerializer(db.objects.search_text(query), many=True)
-            response = {"places": serializer.data}
-            print serializer.data
-            return Response(response, status=status.HTTP_200_OK)
-
+            len = serializer.instance.__len__()
+            message = str(len) + " place found"
+            if rawData.has_key("_method"):
+                if rawData["_method"] == 'update':
+                    return dataAdminViews.updatePlace(request, serializer.data[:], message)
+                if rawData["_method"] == 'delete':
+                    return dataAdminViews.deletePlace(request, serializer.data[:], message)
+        
+        # else (calls coming from django_rest_framework)
         serializer = PlaceSerializer(db.objects.all(), many=True)
         response = {"places": serializer.data}
         return Response(response, status=status.HTTP_200_OK)
@@ -44,23 +50,56 @@ class PlaceView(APIView):
         data = {}
         if (type(rawData)==QueryDict):
             rawDataDict = rawData.dict()
-            data["name"] = rawDataDict["place_name"].encode()
-            data["state"] = rawDataDict["state"].encode()
-            data["country"] = rawDataDict["country"].encode()
-            data["address"] = rawDataDict["address"].encode()
-            data["latitude"] = float(rawDataDict["latitude"].encode())
-            data["longitude"] = float(rawDataDict["longitude"].encode())
-            data["place_id"] = rawDataDict["place_id"].encode()
-            data["map_url"] = rawDataDict["map_url"].encode()
-            data["description"] = rawDataDict["description"].encode()
+            
+            if (rawDataDict.has_key("_method")):
+                if (rawDataDict["_method"] == "update"):
+                    return self.update(request, rawDataDict)
+                elif (rawDataDict["_method"] == "delete"):
+                    return self.delete(request, rawDataDict)
+            else:   
+                return self.create(request, rawData)
+
+        else:
+            #data = rawData
+            return self.create(rawData)
+
+    def update(self, request, dataDict):
+        dbID = dataDict["db_id"]
+        placeInstance = get_object_or_404(db.objects.all(), pk=dbID)
+        serializer = PlaceSerializer()
+        placeInstance = serializer.update(placeInstance, dataDict)
+        message = "Success: Place '{}' updated successfully".format(placeInstance.name)
+        return dataAdminViews.updatePlace(request, [], message)
+
+    def delete(self, request, dataDict):
+        dbID = dataDict["db_id"]
+        placeInstance = get_object_or_404(db.objects.all(), pk=dbID)
+        placeInstance.delete()
+        message = "Success: Place '{}' deleted successfully".format(placeInstance.name)
+        return dataAdminViews.deletePlace(request, [], message)
+
+    def create(self, request, rawData):
+        data = {}
+        if (type(rawData)==QueryDict):
+            rawDataDict = rawData.dict()
+
+            data["name"] = rawDataDict["place_name"]
+            data["state"] = rawDataDict["state"]
+            data["country"] = rawDataDict["country"]
+            data["address"] = rawDataDict["address"]
+            data["latitude"] = float(rawDataDict["latitude"])
+            data["longitude"] = float(rawDataDict["longitude"])
+            data["place_id"] = rawDataDict["place_id"]
+            data["map_url"] = rawDataDict["map_url"]
+            data["description"] = rawDataDict["description"]
             if (data["description"]==''):
                 data["description"] = data["name"] 
             photo_urls = []
             for key in rawDataDict.keys():
                 if (key.find("place_photo_url")!=-1):
-                    url = {}
-                    url["url"] = rawDataDict[key].encode()
-                    photo_urls.append(url)
+                    urlDict = {}
+                    urlDict["url"] = getOriginalURL(rawDataDict[key])
+                    photo_urls.append(urlDict)
             data["photo_urls"] = photo_urls
         else:
             data = rawData
@@ -82,3 +121,10 @@ class PlaceView(APIView):
                 return dataAdminViews.addPlace(request, msg, False)
             else:
                 return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+
+def getOriginalURL(url):
+    # here we will open photo url, then google will redirect us to original google content
+    # url for that photos. This will help us in saving multiple call to get same photo in 
+    # future using API_KEY
+    response = urllib2.urlopen(url)
+    return response.geturl()

@@ -244,7 +244,7 @@
         }
     </script>
     <script type="text/javascript">
-        function submitPlaceDetail(placeID) {
+       /* function submitPlaceDetail(placeID) {
             var placeDetail = {};
             placeDetail.name = $("#place_name" + placeID).val();
             //placeDetail.address = $("#address" + placeID).val();
@@ -270,7 +270,6 @@
         var a=[];
         a.push(placeDetail);
             placeDetail2.place = placeDetail;
-            const url_ = '{{ placeAPI }}';
 
             console.log(JSON.stringify(placeDetail2));
         var data1 = JSON.stringify(placeDetail2);

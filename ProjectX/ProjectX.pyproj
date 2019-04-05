@@ -96,6 +96,7 @@
     <Content Include="dataAdmin\static\data_admin\js\bootstrap.min.js" />
     <Content Include="dataAdmin\static\data_admin\js\jquery.min.js" />
     <Content Include="dataAdmin\static\data_admin\js\popper.min.js" />
+    <Content Include="dataAdmin\templates\data_admin\place_info_template.html" />
     <Content Include="dataAdmin\templates\data_admin\update_place.html" />
     <Content Include="dataAdmin\templates\data_admin\add_place.html" />
     <Content Include="dataAdmin\templates\data_admin\index.html" />

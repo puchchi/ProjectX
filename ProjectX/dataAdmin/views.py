@@ -32,12 +32,45 @@ def addPlace(request, msg="", isSuccessful=False):
         }
     )
 
-def updatePlace(request):
+def updatePlace(request, serializer=[], msg=""):
+    # serializer if ordered dict, we need to convert it to dict
+    place_list=[]
+    for place in serializer:
+        placeDict = dict(place)
+        photo_urls = []
+        for photo_url in placeDict['photo_urls']:
+            photo_urls.append(dict(photo_url))
+        placeDict['photo_urls'] = photo_urls
+        place_list.append(placeDict)
 
     return render(
         request,
         'data_admin/update_place.html',
         {
             'title':'Update Place',
+            'place_list':place_list,
+            'method':'update',
+            'previousMessage':msg
+        }
+    )
+
+def deletePlace(request, serializer=[], msg=""):
+    # serializer if ordered dict, we need to convert it to dict
+    place_list=[]
+    for place in serializer:
+        placeDict = dict(place)
+        photo_urls = []
+        for photo_url in placeDict['photo_urls']:
+            photo_urls.append(dict(photo_url))
+        placeDict['photo_urls'] = photo_urls
+        place_list.append(placeDict)
+    return render(
+        request,
+        'data_admin/delete_place.html',
+        {
+            'title':'Delete Place',
+            'place_list':place_list,
+            'method':'delete',
+            'previousMessage':msg
         }
     )
