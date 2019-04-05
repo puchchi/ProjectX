@@ -1,15 +1,13 @@
-from rest_framework_mongoengine import viewsets
-
 from serializers import PlaceSerializer
 from models import Place2 as db
 from dataAdmin import views as dataAdminViews
 
+from rest_framework_mongoengine import viewsets
 from rest_framework import status
 from rest_framework.views import APIView
 from rest_framework.response import Response
 from django.http.request import QueryDict
-
-from django.shortcuts import get_list_or_404, get_object_or_404
+from django.shortcuts import get_object_or_404
 import json, urllib2
 
 # Create your views here.
@@ -68,14 +66,14 @@ class PlaceView(APIView):
         placeInstance = get_object_or_404(db.objects.all(), pk=dbID)
         serializer = PlaceSerializer()
         placeInstance = serializer.update(placeInstance, dataDict)
-        message = "Success: Place '{}' updated successfully".format(placeInstance.name)
+        message = "Success: '{}' updated successfully".format(placeInstance.name)
         return dataAdminViews.updatePlace(request, [], message)
 
     def delete(self, request, dataDict):
         dbID = dataDict["db_id"]
         placeInstance = get_object_or_404(db.objects.all(), pk=dbID)
         placeInstance.delete()
-        message = "Success: Place '{}' deleted successfully".format(placeInstance.name)
+        message = "Success: '{}' deleted successfully".format(placeInstance.name)
         return dataAdminViews.deletePlace(request, [], message)
 
     def create(self, request, rawData):

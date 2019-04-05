@@ -19,13 +19,13 @@
                     <a class="nav-link navbar-brand" href="{% url 'dataAdminIndex' %}">ProjectX</a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link" href="{% url 'dataAdminAddPlace' %}">Add place</a>
+                    <a class="nav-link" href="{% url 'dataAdminAddPlace' %}">Add Place</a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link" href="{% url 'dataAdminDeletePlace' %}">Delete place</a>
+                    <a class="nav-link" href="{% url 'dataAdminUpdatePlace' %}">Find/Update/Delete Place</a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link" href="{% url 'dataAdminUpdatePlace' %}">Find/Update place</a>
+                    <a class="nav-link" href="{% url 'dataAdminIndex' %}">Index place</a>
                 </li>
             </ul>
             {% include 'data_admin/loginpartial.html' %}

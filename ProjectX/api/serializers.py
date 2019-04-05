@@ -20,7 +20,6 @@ class PlaceSerializer(serializers.DocumentSerializer):
         instance.place_id = validated_data["place_id"]
         photo_urls = []
         for key in validated_data.keys():
-            print key
             if (key.find("place_photo_url")!=-1):
                 url = URLInput(validated_data[key])
                 photo_urls.append(url)

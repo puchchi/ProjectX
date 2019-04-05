@@ -12,5 +12,4 @@ urlpatterns = [
         url(r'^index/$',views.index, name='dataAdminIndex'),
         url(r'^addplace/$',views.addPlace, name='dataAdminAddPlace'),
         url(r'^updateplace/$',views.updatePlace, name='dataAdminUpdatePlace'),
-        url(r'^deleteplace/$',views.deletePlace, name='dataAdminDeletePlace'),
     ]
