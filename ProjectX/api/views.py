@@ -81,13 +81,29 @@ class PlaceView(APIView):
         if (type(rawData)==QueryDict):
             rawDataDict = rawData.dict()
 
+            newPlaceID = rawDataDict["place_id"]
+            newPlaceLatitude = float(rawDataDict["latitude"])
+            newPlaceLongitude = float(rawDataDict["longitude"])
+
+            placeFound = False
+            # Checking if given place is already not in database
+            oldPlaceSerializer = PlaceSerializer(db.objects.search_text(rawDataDict["place_name"]), many=True)
+            for place in oldPlaceSerializer.data[:]:
+                placeDict = dict(place)
+                if (newPlaceID == placeDict["place_id"] and newPlaceLatitude == placeDict["latitude"] and newPlaceLongitude == placeDict["longitude"]):
+                    placeFound = True
+
+            if placeFound:
+                msg = rawDataDict["place_name"] + " already exists."
+                return dataAdminViews.addPlace(request, msg, False)
+
             data["name"] = rawDataDict["place_name"]
             data["state"] = rawDataDict["state"]
             data["country"] = rawDataDict["country"]
             data["address"] = rawDataDict["address"]
-            data["latitude"] = float(rawDataDict["latitude"])
-            data["longitude"] = float(rawDataDict["longitude"])
-            data["place_id"] = rawDataDict["place_id"]
+            data["latitude"] = newPlaceLatitude
+            data["longitude"] = newPlaceLongitude
+            data["place_id"] = newPlaceID
             data["map_url"] = rawDataDict["map_url"]
             data["description"] = rawDataDict["description"]
             if (data["description"]==''):
