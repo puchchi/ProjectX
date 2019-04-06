@@ -1,0 +1,42 @@
+{% extends "data_admin/layout.html" %}
+
+{% block content %}
+
+<h3 class="marginT20">{{ title }}</h3>
+
+<hr />
+
+    <form action="/api/" method="GET" class="">
+        {% csrf_token %}
+        <div class="form-inline">
+            <input type="hidden" name="_method" value="allplace" />
+            <label class="col-md-2 justify-contentL">Filter by: </label>
+            <input list="countryList" name="country" class="col-sm-3 form-control" placeholder="Country">
+            <datalist id="countryList">
+                <option value="All"></option>
+                {% for country in country_list %}
+                    <option value="{{ country }}"></option>
+                {% endfor %}
+            </datalist>
+            <label class="col-md-1 justify-contentL"></label><!-- Placeholder label-->
+            <input list="stateList" name="state" class="col-sm-3 form-control" placeholder="State">
+            <datalist id="stateList">
+                <option value="All"></option>
+                {% for state in state_list %}
+                    <option value="{{ state }}"></option>
+                {% endfor %}
+            </datalist>
+            <label class="col-md-1 justify-contentL"></label><!-- Placeholder label-->
+            <button type="submit" class="btn btn-primary col-md-2 justify-contentR " >Search</button>
+        </div>
+    </form>
+
+    <hr />
+    {% include "data_admin/place_info_template.html" %}
+{% endblock %}
+
+{% block scripts %}
+<script>
+</script>
+
+{% endblock %}

@@ -9,19 +9,22 @@
     <form action="/api/" method="GET" class="">
         <div class="form-inline">
             <input type="hidden" name="_method" value="update" />
-            <input type="text" class="col-md-9 form-control" name="search_query" id="search_query" placeholder="Enter Place Name" required/>
+            <input list="all_place_list" type="text" class="col-md-9 form-control" name="search_query" id="search_query" placeholder="Enter Place Name" required/>
+            <datalist id="all_place_list">
+                {% for place in all_place_name_list %}
+                    <option value="{{ place }}"></option>
+                {% endfor %}
+            </datalist>
             <label class="col-md-1 justify-contentL"></label><!-- Placeholder label-->
             <button type="submit" class="btn btn-primary col-md-2 justify-contentR " >Search</button>
         </div>
     </form>
 
-    <hr />
     {% include "data_admin/place_info_template.html" %}
 
 {% endblock %}
 
 {% block scripts %}
-<script type="text/javascript" src="https://maps.googleapis.com/maps/api/js?key={{ key }}&libraries=places&callback=getPlaceData" async defer></script>
 <script>
     function removePhoto(btnId) {
             var btnIdTemp = "#" + btnId;

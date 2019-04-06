@@ -5,7 +5,7 @@
     </div>
 {% endif %}
 
-{% for place in place_list %}
+{% for place in searched_place_list %}
     <div class="img-thumbnail">
         <form action="/api/" method="POST" class="marginB10">
             {% csrf_token %}
@@ -56,6 +56,7 @@
         </form>
 
         <form action="/api/" method="POST" class="marginB20">
+            {% csrf_token %}
             <input type="hidden" name="_method" value="delete" />
             <input type="hidden"  name="db_id" id="db_id" required="" value="{{ place.id }}"> 
             <button type="submit" id="2" class="btn btn-danger col-md-12 justify-contentR" > Delete Place</button>

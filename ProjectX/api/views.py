@@ -28,15 +28,33 @@ class PlaceView(APIView):
         rawData = request.GET
         if (type(rawData)==QueryDict):
             data = rawData.dict()
-            query = data['search_query']
-            serializer = PlaceSerializer(db.objects.search_text(query), many=True)
-            len = serializer.instance.__len__()
-            message = str(len) + " place found"
-            if rawData.has_key("_method"):
-                if rawData["_method"] == 'update':
-                    return dataAdminViews.updatePlace(request, serializer.data[:], message)
-                if rawData["_method"] == 'delete':
-                    return dataAdminViews.deletePlace(request, serializer.data[:], message)
+            if rawData.has_key("search_query"):
+                query = data['search_query']
+                serializer = PlaceSerializer(db.objects.search_text(query), many=True)
+                len = serializer.instance.__len__()
+                message = str(len) + " place found"
+                if rawData.has_key("_method"):
+                    if rawData["_method"] == 'update':
+                        return dataAdminViews.updatePlace(request, serializer.data[:], message)
+                    if rawData["_method"] == 'delete':
+                        return dataAdminViews.deletePlace(request, serializer.data[:], message)
+            elif rawData["_method"] == 'allplace':
+                    countrySearchQuery = data['country']
+                    stateSearchQuery = data['state']
+                    serializer = PlaceSerializer()
+                    if countrySearchQuery.__len__()>0:
+                        if countrySearchQuery == "All":
+                            serializer = PlaceSerializer(db.objects.all(), many=True)
+                        else:
+                            serializer = PlaceSerializer(db.objects(country=countrySearchQuery), many=True)
+                    elif stateSearchQuery.__len__()>0:
+                        if stateSearchQuery == "All":
+                            serializer = PlaceSerializer(db.objects.all(), many=True)
+                        else:
+                            serializer = PlaceSerializer(db.objects(state=stateSearchQuery), many=True)
+                    len = serializer.instance.__len__()
+                    message = str(len) + " place found"
+                    return dataAdminViews.allPlace(request, serializer.data[:], message)
         
         # else (calls coming from django_rest_framework)
         serializer = PlaceSerializer(db.objects.all(), many=True)
