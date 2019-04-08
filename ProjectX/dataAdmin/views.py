@@ -40,7 +40,8 @@ def addPlace(request, msg="", isSuccessful=False):
             'key':GOOGLE_API_KEY,
             'placeAPI':'http://localhost:8000/api/',
             'previousPostStatus': isSuccessful,
-            'previousMessage':msg
+            'previousMessage':msg,
+            'place_type_list':PLACE_TYPE_LIST
         }
     )
 
@@ -59,10 +60,6 @@ def updatePlace(request, serializer=[], msg=""):
     place_list=[]
     for place in serializer:
         placeDict = dict(place)
-        photo_urls = []
-        for photo_url in placeDict['photo_urls']:
-            photo_urls.append(dict(photo_url))
-        placeDict['photo_urls'] = photo_urls
         place_list.append(placeDict)
 
     return render(
@@ -73,7 +70,8 @@ def updatePlace(request, serializer=[], msg=""):
             'year':datetime.now().year,
             'all_place_name_list':db.objects.distinct("name"),
             'searched_place_list':place_list,
-            'previousMessage':msg
+            'previousMessage':msg,
+            'place_type_list':PLACE_TYPE_LIST
         }
     )
 
@@ -95,10 +93,6 @@ def allPlace(request, serializer=[], msg=""):
     place_list=[]
     for place in serializer:
         placeDict = dict(place)
-        photo_urls = []
-        for photo_url in placeDict['photo_urls']:
-            photo_urls.append(dict(photo_url))
-        placeDict['photo_urls'] = photo_urls
         place_list.append(placeDict)
     return render(
         request,
@@ -109,7 +103,8 @@ def allPlace(request, serializer=[], msg=""):
             'state_list':db.objects.distinct("state"),
             'country_list':db.objects.distinct("country"),
             'searched_place_list':place_list,
-            'previousMessage':msg
+            'previousMessage':msg,
+            'place_type_list':PLACE_TYPE_LIST
         }
     )
 

@@ -25,7 +25,7 @@
         <label class="col-md-1 justify-contentL"></label><!-- Placeholder label-->
         <button type="button" class="btn btn-primary col-md-2 justify-contentR " onclick="getPlaceData()">Fetch Data</button>
     </div>
-
+    
     <hr />
 
     <div class="alert alert-info alert-dismissible collapse" id="place-info-alert">
@@ -155,6 +155,17 @@
                             placeBody += '" required value="';
                             placeBody += placeDetailsResult['url'];
                             placeBody += '"/></div>';
+                            // place tag=
+                            tagEditorID = 'tagEditor' + placeID;
+                            placeBody += '<div class="form-inline marginB10"><label for="description" class="col-md-2  justify-contentL">Tags:</label>';
+                            placeBody += '<div class="col-md-10 no-padding"><input type="text" value=""  data-role="tagEditor" name="place_type" id="';
+                            placeBody += tagEditorID;
+                            placeBody += '" required/></div></div>';
+                            
+                            // place tag label
+                            placeBody += '<div class="form-inline"><label class="col-md-2 justify-contentL">Tag labels:</label>';
+                            placeBody += '<label class="col-md-10">{{ place_type_list }} </label>';
+                            placeBody += '</div> "';
                             //description
                             placeBody += '<div class="form-inline marginB10"><label for="description" class="col-md-2  justify-contentL">Description:</label>';
                             placeBody += '<textarea class="form-control col-md-10 " rows="5" name="description" id="description';
@@ -191,6 +202,7 @@
                             placeBody += '</form></div></div></div>';
                             
                             $("#place-holder").append(placeBody);
+                            tagEditorInit(tagEditorID);
                         }
                     });
 
@@ -216,32 +228,32 @@
                 //call your function
             });
         });
-        function addEventsToUpdatedDOM() {
-            // Delete image button funcationality
-            /*$(".delete-image-btn").click(function () {
-                $(this).parent().remove();
-            });*/
 
-            // Open place detail
-            /*$(".card").click(function () {
-                // first hide all card body
-                var cardbodyId = $(this).attr("href");
-                var selector = $(".card-body");
-                for (var i = 0; i < selector.length; i++) {
-                    if ($(cardbodyId)[0] != (selector[i]) && $(selector[i]).is(":visible")) {
-                        $(selector[i]).hide();
-                    }
-                }
-                $(cardbodyId).toggle();
-            });
-            */
+        var place_type_list = []
+        {% for type in place_type_list %}
+             place_type_list.push("{{ type }}")
+        {% endfor %}
+    </script>
+    <script>
+        function tagEditorInit(tagEditorID) {
+            $('#'+tagEditorID).tagEditor({
+                autocomplete: {
+                    delay: 0, // show suggestions immediately
+                    position: { collision: 'flip' }, // automatic menu position up/down
+                    source: place_type_list
+                },
+                forceLowercase: false,
+                placeholder: 'Place tag'
+            })
         };
 
         function removePhoto(btnId) {
             var btnIdTemp = "#" + btnId;
             $(btnIdTemp).parent().remove();
         }
+    
     </script>
+
     <script type="text/javascript">
        /* function submitPlaceDetail(placeID) {
             var placeDetail = {};
@@ -302,9 +314,9 @@
                 }).catch(function (error) {
                     document.getElementById("message").innerHTML = error.message;
                 });
-             */
+             
             
-        }
+        }*/
     </script>
 
 {% endblock %}

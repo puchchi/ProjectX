@@ -26,10 +26,11 @@ class Place2(Document):
     address = fields.StringField(required=False)
     latitude = fields.FloatField(required=True)
     longitude = fields.FloatField(required=True)
-    photo_urls = fields.ListField(fields.EmbeddedDocumentField(URLInput))
+    photo_urls = fields.ListField(required=False)
     map_url = fields.StringField(required=True)
     description = fields.StringField(required=False)
     place_id = fields.StringField(required=True)
+    place_type = fields.ListField(required=True)
 
     meta = {'indexes': [
         {'fields': ['$name', "address"],

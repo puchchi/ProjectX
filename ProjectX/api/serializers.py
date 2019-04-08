@@ -18,11 +18,11 @@ class PlaceSerializer(serializers.DocumentSerializer):
         instance.longitude = float(validated_data["longitude"])
         instance.map_id = validated_data["map_url"]
         instance.place_id = validated_data["place_id"]
+        instance.place_type = map(str.strip, validated_data["place_type"].encode().split(','))
         photo_urls = []
         for key in validated_data.keys():
             if (key.find("place_photo_url")!=-1):
-                url = URLInput(validated_data[key])
-                photo_urls.append(url)
+                photo_urls.append(validated_data[key])
         instance.photo_urls = photo_urls
 
         instance.save()

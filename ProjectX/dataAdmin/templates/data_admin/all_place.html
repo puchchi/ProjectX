@@ -36,7 +36,23 @@
 {% endblock %}
 
 {% block scripts %}
-<script>
+<script type="text/javascript">
+    $(document).ready(function () {
+        var place_type_list = []
+        {% for type in place_type_list %}
+             place_type_list.push("{{ type }}")
+        {% endfor %}
+
+        $('.tag-editor-class').tagEditor({
+            autocomplete: {
+                delay: 0, // show suggestions immediately
+                position: { collision: 'flip' }, // automatic menu position up/down
+                source: place_type_list
+            },
+            forceLowercase: false,
+            placeholder: 'Place tag'
+        })
+    });
 </script>
 
 {% endblock %}

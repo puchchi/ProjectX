@@ -39,15 +39,27 @@
                 <input type="text" class="col-md-4 form-control" name="map_url" id="map_url" required="" value="{{ place.map_url }}">
             </div>
             <div class="form-inline marginB10">
+                <label for="description" class="col-md-2 justify-contentL">Tags:</label>
+                 <div class="col-md-10 no-padding">
+                    {% load custom_template %}
+                    <input type="text" value="{{ place.place_type|convert_list_to_string }}" class="tag-editor-class" data-role="tagEditor" name="place_type" id="tagEditor" required/>
+                 </div>
+            </div>
+            <div class="form-inline">
+                <label class="col-md-2 justify-contentL">Tag labels:</label>
+                <label class="col-md-10">{{ place_type_list }} </label>
+            </div>
+
+            <div class="form-inline marginB10">
                 <label for="description" class="col-md-2  justify-contentL">Description:</label>
                 <textarea class="form-control col-md-10 " rows="5" name="description" id="description" value="{{ place.description }}"></textarea>
             </div>
             <label for="photos" class="col-md-12  justify-contentL">Photos (Delete photos which are not good):</label>
             <div class="form-inline marginB10">
-                {% for urlDict in place.photo_urls %}
+                {% for url in place.photo_urls %}
                 <div class="col-md-3 img-thumbnail text-center">
-                    <a href="{{ urlDict.url }}" target="_blank"><img class="img-thumbnail place_photo2" src="{{ urlDict.url }}"></a>
-                    <input class="hidden height1" value="{{ urlDict.url }}" name="place_photo_url{{ forloop.counter }}" type="text">
+                    <a href="{{ url }}" target="_blank"><img class="img-thumbnail place_photo2" src="{{ url }}"></a>
+                    <input class="hidden height1" value="{{ url }}" name="place_photo_url{{ forloop.counter }}" type="text">
                     <button id="201" type="button" class="btn btn-danger" onclick="removePhoto(this.id)">Delete</button>
                 </div>
                 {% endfor %}

@@ -124,14 +124,13 @@ class PlaceView(APIView):
             data["place_id"] = newPlaceID
             data["map_url"] = rawDataDict["map_url"]
             data["description"] = rawDataDict["description"]
+            data["place_type"] = map(str.strip, rawDataDict["place_type"].encode().split(','))
             if (data["description"]==''):
                 data["description"] = data["name"] 
             photo_urls = []
             for key in rawDataDict.keys():
                 if (key.find("place_photo_url")!=-1):
-                    urlDict = {}
-                    urlDict["url"] = getOriginalURL(rawDataDict[key])
-                    photo_urls.append(urlDict)
+                    photo_urls.append(getOriginalURL(rawDataDict[key]))
             data["photo_urls"] = photo_urls
         else:
             data = rawData
